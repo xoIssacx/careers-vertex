@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vertex Interactive Careers</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  :root {
+    --bg: #0b0c10;
+    --bg-alt: #0f1116;
+    --bg-card: #11141b;
+    --bg-card-hover: #171a22;
+    --text-main: #ffffff;
+    --text-muted: #a3a9b7;
+    --accent: #5865f2;
+    --accent-soft: rgba(88,101,242,0.18);
+    --radius-lg: 18px;
+    --radius-md: 12px;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+  }
+
+  .container {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 110px 0 70px;
+  }
+
+  .hero h1 {
+    font-size: 56px;
+    font-weight: 900;
+    margin-bottom: 18px;
+  }
+
+  .hero p {
+    font-size: 20px;
+    color: var(--text-muted);
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  /* ACTION BUTTONS */
+  .action-buttons {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 12px 22px;
+    border-radius: var(--radius-md);
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s;
+  }
+
+  .btn:hover {
+    background: #4752c4;
+  }
+
+  .btn-secondary {
+    background: #151821;
+    border: 1px solid #262932;
+    color: #fff;
+  }
+
+  .btn-secondary:hover {
+    background: #1d2029;
+  }
+
+  /* FILTER BAR */
+  .filter-bar {
+    margin: 40px 0 20px;
+    display: flex;
+    gap: 12px;
+  }
+
+  select {
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    background: #151821;
+    color: #fff;
+    border: 1px solid #262932;
+  }
+
+  /* JOB GRID */
+  .jobs-grid {
+    display: grid;
+    gap: 26px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+
+  .job-card {
+    background: var(--bg-card);
+    padding: 26px;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+
+  .job-card:hover {
+    background: var(--bg-card-hover);
+    transform: translateY(-6px);
+  }
+
+  .job-category {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  .job-location {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+
+  /* JOB DETAIL PAGE */
+  .job-detail {
+    padding: 60px 0;
+  }
+
+  .job-detail h1 {
+    font-size: 42px;
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+
+  .meta {
+    color: var(--text-muted);
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    margin-top: 40px;
+    font-size: 26px;
+  }
+
+  ul {
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .back {
+    display: inline-block;
+    margin-top: 40px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* HIDE SECTIONS */
+  .hidden {
+    display: none;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- HOME PAGE -->
+  <section id="homePage">
+
+    <div class="hero">
+      <h1>PRODUCTS — BUILD IT WITH US.</h1>
+      <p>Explore our open roles and see where your skills can help shape the future of interactive worlds.</p>
+
+      <!-- FIXED BUTTONS -->
+      <div class="action-buttons">
+        <a class="btn" href="https://community.vertexinteractive.co.uk/" target="_blank">Join our Discord</a>
+        <a class="btn" href="https://forms.gle/GHqRmnDUB4TYHHvn9" target="_blank">Apply via Google Form</a>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <select id="departmentFilter">
+        <option value="">All Departments</option>
+      </select>
+
+      <select id="locationFilter">
+        <option value="">All Locations</option>
+      </select>
+    </div>
+
+    <div class="jobs-grid" id="jobsGrid"></div>
+
+  </section>
+
+  <!-- JOB DETAIL PAGE -->
+  <section id="jobPage" class="hidden">
+    <div id="jobContent"></div>
+
+    <div class="action-buttons" style="margin-top: 30px;">
+      <a class="btn" href="https://community.vertexinteractive.co.uk/" target="_blank">Join our Discord</a>
+      <a class="btn" href="https://forms.gle/GHqRmnDUB4TYHHvn9" target="_blank">Apply via Google Form</a>
+    </div>
+
+    <a class="back" onclick="goHome()">← Back to Careers</a>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer style="text-align:center; padding:40px 0; color:#a3a9b7; font-size:14px;">
+  To reach out to our employment team, contact 
+  <a href="mailto:careers@vertexinteractive.co.uk" style="color:#5865f2; text-decoration:none;">
+    careers@vertexinteractive.co.uk
+  </a>
+</footer>
+
+<script>
+/* ---------------------------------------------------------
+   EMBEDDED JSON JOB FEED
+--------------------------------------------------------- */
+const JOBS = [
+  {
+    "id": "customer-specialist",
+    "title": "Customer Service Specialist",
+    "department": "Sales",
+    "location": "Remote · UK & US",
+    "description": "Provide exceptional customer support and drive sales growth.",
+    "responsibilities": [
+      "Assist customers with inquiries and issues",
+      "Identify opportunities for improving customer satisfaction",
+      "Collaborate with other teams to resolve customer concerns"
+    ],
+    "requirements": [
+      "2+ years customer service experience or some minor experience in customer service.",
+      "Strong communication and problem-solving skills",
+      "Experience with Modmail or similar CRM tools is a plus",
+      "Ability to work under pressure and handle difficult situations with empathy",
+      "Ability to provide feedback to internal teams based on customer interactions",
+      "At the age of 13 or older, this is to remain inline with Discord's Terms of Service and to ensure candidates have the necessary maturity and communication skills for the role."
+    ]
+  },
+    {
+    "id": "marketing",
+    "title": "Marketing Specialist",
+    "department": "Sales",
+    "location": "Remote · UK & US",
+    "description": "Provide exceptional customer support and drive sales growth.",
+    "responsibilities": [
+      "Provide exceptional customer support and drive sales growth.",
+      "Identify opportunities for improving customer satisfaction",
+      "Collaborate with other teams to resolve customer concerns",
+      "Create and execute marketing campaigns to promote our products and services"
+    ],
+    "requirements": [
+      "2+ years customer service experience or some minor experience in customer service.",
+      "Strong communication and problem-solving skills",
+      "Experience with Modmail or similar CRM tools is a plus",
+      "Ability to work under pressure and handle difficult situations with empathy",
+      "Ability to provide feedback to internal teams based on customer interactions",
+       "At the age of 13 or older, this is to remain inline with Discord's Terms of Service and to ensure candidates have the necessary maturity and communication skills for the role."
+    ]
+  },
+  {
+    "id": "ui-ux-product-designer",
+    "title": "UI/UX Product Designer",
+    "department": "Design",
+    "location": "Remote · Global",
+    "description": "Design intuitive, beautiful interfaces for players and creators.",
+    "responsibilities": [
+      "Create wireframes and prototypes",
+      "Define visual language and interaction patterns",
+      "Work closely with engineering"
+    ],
+    "requirements": [
+      "Strong portfolio",
+      "Experience with Figma or similar design tools",
+      "Understanding of UX principles",
+       "At the age of 13 or older, this is to remain inline with Discord's Terms of Service and to ensure candidates have the necessary maturity and communication skills for the role."
+    ]
+  },
+  {
+    "id": "livery-artist",
+    "title": "Livery Artist",
+    "department": "Art",
+    "location": "Remote · Global",
+    "description": "Create stunning visual designs for game assets and environments.",
+    "responsibilities": [
+      "Design and create 2D and 3D art assets",
+      "Collaborate with design and development teams",
+      "Maintain and update art pipelines"
+    ],
+    "requirements": [
+      "Strong portfolio showcasing relevant work",
+      "Proficiency in Adobe Creative Suite or Blender",
+      "Ability to take feedback and iterate",
+      "Strong communication skills",
+       "At the age of 13 or older, this is to remain inline with Discord's Terms of Service and to ensure candidates have the necessary maturity and communication skills for the role."
+    ]
+  }
+];
+
+/* ---------------------------------------------------------
+   FILTER + RENDER JOB CARDS
+--------------------------------------------------------- */
+function populateFilters() {
+  const deptSelect = document.getElementById("departmentFilter");
+  const locSelect = document.getElementById("locationFilter");
+
+  const departments = [...new Set(JOBS.map(j => j.department))];
+  const locations = [...new Set(JOBS.map(j => j.location))];
+
+  departments.forEach(d => {
+    deptSelect.innerHTML += `<option value="${d}">${d}</option>`;
+  });
+
+  locations.forEach(l => {
+    locSelect.innerHTML += `<option value="${l}">${l}</option>`;
+  });
+}
+
+function renderJobs() {
+  const dept = document.getElementById("departmentFilter").value;
+  const loc = document.getElementById("locationFilter").value;
+  const grid = document.getElementById("jobsGrid");
+
+  grid.innerHTML = "";
+
+  JOBS
+    .filter(j => (dept ? j.department === dept : true))
+    .filter(j => (loc ? j.location === loc : true))
+    .forEach(job => {
+      grid.innerHTML += `
+        <div class="job-card" onclick="openJob('${job.id}')">
+          <span class="job-category">${job.department}</span>
+          <h3>${job.title}</h3>
+          <p class="job-location">${job.location}</p>
+        </div>
+      `;
+    });
+}
+
+/* ---------------------------------------------------------
+   JOB DETAIL PAGE
+--------------------------------------------------------- */
+function openJob(id) {
+  const job = JOBS.find(j => j.id === id);
+  if (!job) return;
+
+  document.getElementById("homePage").classList.add("hidden");
+  document.getElementById("jobPage").classList.remove("hidden");
+
+  document.getElementById("jobContent").innerHTML = `
+    <div class="job-detail">
+      <h1>${job.title}</h1>
+      <div class="meta">${job.department} · ${job.location}</div>
+
+      <h2>About the Role</h2>
+      <p>${job.description}</p>
+
+      <h2>Responsibilities</h2>
+      <ul>${job.responsibilities.map(r => `<li>${r}</li>`).join("")}</ul>
+
+      <h2>Requirements</h2>
+      <ul>${job.requirements.map(r => `<li>${r}</li>`).join("")}</ul>
+    </div>
+  `;
+}
+
+function goHome() {
+  document.getElementById("jobPage").classList.add("hidden");
+  document.getElementById("homePage").classList.remove("hidden");
+}
+
+/* ---------------------------------------------------------
+   INIT
+--------------------------------------------------------- */
+populateFilters();
+renderJobs();
+
+document.getElementById("departmentFilter").addEventListener("change", renderJobs);
+document.getElementById("locationFilter").addEventListener("change", renderJobs);
+</script>
+
+</body>
+</html>
